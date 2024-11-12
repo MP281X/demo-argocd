@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: demo-argocd
+  namespace: argocd
+spec:
+  generators:
+    - list: 
+        elements:
+          - name: app1
+            environment: dev
+          - name: app1
+            environment: staging
+          - name: app1
+            environment: prod
+  template:
+    metadata:
+      name: '{{name}}-{{environment}}'
+    spec:
+      project: demo-argocd
+      syncPolicy:
+        syncOptions: [CreateNamespace=true]
+        automated: { prune: true, selfHeal: true }
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{name}}-{{environment}}'
+      source:
+        path: '{{name}}/helm'
+        targetRevision: main
+        repoURL: https://github.com/MP281X/demo-argocd
+        helm:
+          valuesFile: '{{name}}/{{environment}}.yaml'

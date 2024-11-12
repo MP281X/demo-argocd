@@ -1,0 +1,7 @@
+image:
+  registry: docker.io
+  tag: alpine-slim
+  repository: nginx
+env:
+  ENV1: ENV1
+  ENV2: ENV2
