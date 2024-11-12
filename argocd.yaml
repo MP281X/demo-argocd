@@ -4,29 +4,24 @@ metadata:
   name: demo-argocd
   namespace: argocd
 spec:
-  generators:
-    - list: 
-        elements:
-          - name: app1
-            environment: dev
-          - name: app1
-            environment: staging
-          - name: app1
-            environment: prod
   template:
-    metadata:
-      name: '{{name}}-{{environment}}'
+    metadata: { name: '{{name}}-{{environment}}' }
     spec:
       project: demo-argocd
       syncPolicy:
         syncOptions: [CreateNamespace=true]
         automated: { prune: true, selfHeal: true }
       destination:
-        server: https://kubernetes.default.svc
         namespace: '{{name}}-{{environment}}'
+        server: https://kubernetes.default.svc
       source:
         path: '{{name}}/helm'
         targetRevision: main
         repoURL: https://github.com/MP281X/demo-argocd
-        helm:
-          valueFiles: ['../{{environment}}.yaml']
+        helm: { valueFiles: ['../{{environment}}.yaml'] }
+  generators:
+    - list:
+        elements:
+          - { name: app1, environment: dev }
+          - { name: app1, environment: prod }
+          - { name: app1, environment: staging }
