@@ -16,7 +16,7 @@ spec:
         server: https://kubernetes.default.svc
       source:
         path: '{{name}}/helm'
-        targetRevision: main
+        targetRevision: '{{environment}}'
         repoURL: https://github.com/MP281X/demo-argocd
         helm: { valueFiles: ['../{{environment}}.yaml'] }
   generators:
