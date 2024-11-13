@@ -10,7 +10,7 @@ spec:
       project: demo-argocd
       syncPolicy:
         syncOptions: [CreateNamespace=true]
-        automated: { prune: true, selfHeal: true }
+        automated: null
       destination:
         namespace: '{{name}}-{{environment}}'
         server: https://kubernetes.default.svc
