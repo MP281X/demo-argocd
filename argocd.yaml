@@ -9,14 +9,14 @@ spec:
     spec:
       project: demo-argocd
       syncPolicy:
-        syncOptions: [CreateNamespace=true]
         automated: null
+        syncOptions: [CreateNamespace=true]
       destination:
         namespace: '{{name}}-{{environment}}'
         server: https://kubernetes.default.svc
       source:
         path: '{{name}}/helm'
-        targetRevision: '{{environment}}'
+        targetRevision: main
         repoURL: https://github.com/MP281X/demo-argocd
         helm: { valueFiles: ['../{{environment}}.yaml'] }
   generators:
