@@ -1,4 +1,4 @@
-name: Promote the DEV
+name: Promote (STAGING -> PROD)
 
 on: { workflow_dispatch: {} }
 permissions: { contents: write }
@@ -10,9 +10,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Promote the DEV branch to the STAGING branch
+      - name: Promote the STAGING branch to the PROD branch
         run: |
           git fetch origin
-          git checkout staging
-          git reset --hard origin/dev
-          git push origin staging --force
+          git checkout prod
+          git reset --hard origin/staging
+          git push origin prod --force
